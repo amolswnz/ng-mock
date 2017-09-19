@@ -4,7 +4,7 @@ describe('Testing a Hello World controller', function() {
   // Setup for all tests
   beforeEach(function() {
     // loads the app module
-    module('ItemsApp');
+    module('myApp');
     inject(function(_$controller_) {
       // inject removes the underscores and finds the $controller Provider
       $controller = _$controller_;
@@ -30,7 +30,7 @@ describe('Testing Service', function() {
   var LanguagesService;
 
   beforeEach(function() {
-    module('ItemsApp');
+    module('myApp');
     inject(function($injector) {
       ItemsService = $injector.get('ItemsService');
     });
@@ -50,7 +50,7 @@ describe('Testing user-profile directive', function() {
   var $rootScope, $compile, element, scope;
 
   beforeEach(function() {
-    module('ItemsApp');
+    module('myApp');
     inject(function($injector) {
       $rootScope = $injector.get('$rootScope');
       $compile = $injector.get('$compile');
@@ -75,7 +75,7 @@ describe('Testing user-profile directive', function() {
 describe('Testing reverse filter', function() {
   var reverse;
   beforeEach(function() {
-    module('ItemsApp');
+    module('myApp');
     inject(function($filter) { //initialize your filter
       reverse = $filter('reverse', {});
     });
@@ -96,7 +96,7 @@ describe('Testing Items Service - server-side', function() {
     jsonResponse = ['hat', 'book', 'pen']; //this is what the mock service is going to return
 
   beforeEach(function() {
-    module('ItemsApp');
+    module('myApp');
     inject(function($injector) {
       ItemsServiceServer = $injector.get('ItemsServiceServer');
       // set up the mock http service
@@ -135,7 +135,7 @@ describe("appBroadcaster", function() {
     }; //what is going to be broadcast
 
   beforeEach(function() {
-    module("ItemsApp");
+    module("myApp");
     inject(function($injector) {
       appBroadcaster = $injector.get("appBroadcaster"); //get the service
       $rootScope = $injector.get("$rootScope"); //get the $rootScope
@@ -164,5 +164,32 @@ describe("appBroadcaster", function() {
     expect($rootScope.$on).toHaveBeenCalled();
     expect($rootScope.$on).toHaveBeenCalledWith('item:added', jasmine.any(Function));
     expect($scope.item).toEqual(item); //match the broadcasted message with the received message
+  });
+});
+
+
+describe('Testing a VM Hello World controller', function() {
+  var testController;
+
+  beforeEach(function() {
+    module('myApp');
+    inject(function(_$controller_) {
+      testController = _$controller_('VMMainCtrl', {});
+    });
+  });
+
+  it('should have model defined and VMMainCtrl.title is equal Hello VM World', function() {
+    expect(testController).toBeDefined();
+    expect(testController.title).toEqual("Hello VM World");
+  });
+
+  it('should not have a property called vm', function() {
+    expect(testController.vm).toBeUndefined();
+  });
+
+  it('should have model defined and VMMainCtrl.user and name,email to be mine', function() {
+    expect(testController).toBeDefined();
+    expect(testController.user.name).toEqual("Amol");
+    expect(testController.user.email).toEqual("amolsw.nz@gmail.com");
   });
 });

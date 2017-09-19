@@ -1,4 +1,4 @@
-angular.module('ItemsApp', [])
+angular.module('myApp', [])
 
   .controller('MainCtrl', function($scope, $rootScope) {
     $scope.title = 'Hello World';
@@ -57,4 +57,13 @@ angular.module('ItemsApp', [])
       $rootScope.$broadcast("item:added", item);
     };
     return abc;
-  }]);
+  }])
+
+
+  .controller('VMMainCtrl', function() {
+    var vm = this;
+    vm.title = 'Hello VM World';
+    vm.user = {};
+    vm.user.name = 'Amol';
+    vm.user.email = 'amolsw.nz@gmail.com';
+  })
